@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\sprocket_labs\SprocketLabsUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+}); */
+
+
+Route::group([
+
+    'middleware' => 'api',
+
+], function () {
+
+    #User Management for SPROCKET LABS USER
+    Route::get('getallslusers', [SprocketLabsUser::class, 'getAllSprocketLabsUsers']);
+    Route::get('getsluser/{email}', [SprocketLabsUser::class, 'getInfoByEmail']);
+    Route::post('addsluser', [SprocketLabsUser::class, 'create']);
+    Route::post('updatesluser', [SprocketLabsUser::class, 'edit']);
 });
