@@ -14,7 +14,11 @@ class CreateSpOrganizationTable extends Migration
     public function up()
     {
         Schema::create('sp_organization', function (Blueprint $table) {
-            $table->id();
+            $table->increments('organization_id');
+            $table->string('organization_name', 100);
+            $table->string('created_by', 20);
+            $table->string('type_of_user', 20);
+            $table->string('last_edit_user_id', 20);
             $table->timestamps();
         });
     }
