@@ -18,9 +18,7 @@ class SPUser extends Model
     protected $table = 'users';
     protected $primaryKey = 'user_id';
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'middle_name',
+        'name',
         'phone',
         'user_type',
         'last_edit_user_id',

@@ -5,23 +5,20 @@ namespace App\Http\Controllers\sprocket_labs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\User;
-class SprocketLabsUser extends Controller
+use App\Models\ServiceProvider\SPUser;
+use App\Models\ServiceProvider\ServiceProviderOrganization;
+class ServiceProviderUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        // 
+        //
     }
 
-    public function getallsprocketlabusers()
+    public function getallspuser()
     {
-        // Get all Sprocket Labs User
-        $users = User::all();
+        // Get all Service Provider User
+        $users = SPUser::all();
         return $users;
     }
 
@@ -29,7 +26,7 @@ class SprocketLabsUser extends Controller
     {
         //
         $data = $request->all();
-        $username['email'] = User::select('email')
+        $username['email'] = SPUser::select('email')
         ->where('email', "=", $data['email'])
         ->get();
 
@@ -38,8 +35,12 @@ class SprocketLabsUser extends Controller
         }
         else{
             $data["password"] = bcrypt($data['password']);
-            $new_user = User::create($data);
-            if($new_user){
+            $user_organization_data = ServiceProviderOrganization::create($request->except('name', 'phone','email','user_type','is_active', 'password'));
+
+            $data["organization_id"] = $user_organization_data->organization_id;
+            $new_user = SPUser::create($data);
+            
+            if($new_user && $user_organization_data){
                 $msg =  ["msg"=> "success"];
                 return $msg;
             }
@@ -48,9 +49,17 @@ class SprocketLabsUser extends Controller
                 return $msg;
             }
         }
+    
     }
 
+    
     public function store(Request $request)
+    {
+        //
+    }
+
+    
+    public function show($id)
     {
         //
     }
@@ -58,26 +67,33 @@ class SprocketLabsUser extends Controller
     public function getinfobyemail($email)
     {
         // Retrieve a User Information using Email
-        $user = User::where('email', $email)->first();
+        $user = SPUser::where('email', $email)->first();
         return $user;
     }
 
-    
     public function edit(Request $request)
     {
-        //
+        // Update Information for Service Provider
         $data = $request->all();
-        $update_user = User::where('email', '=', $data['email'])->update($data);
-        return $update_user;
+        $update_user = SPUser::where('email', '=', $data['email'])->update($data);
+        if($update_user > 0){
+            $msg =  ["msg"=> "updated"];
+            return $msg;
+        }
+        else{
+            $msg =  ["msg"=> "failed, email not found"];
+            return $msg;
+        }
+        return $msg;
     }
 
     
     public function update(Request $request, $id)
     {
-
-        
+        //
     }
 
+    
     public function destroy($id)
     {
         //

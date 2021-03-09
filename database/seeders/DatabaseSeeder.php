@@ -26,11 +26,11 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Portal', 
             'first_name' => 'DataIQ', 
             'middle_name' => 'Sprocket Labs', 
-            'email' => 'francisfernandez163@gmail.com', 
-            'phone' => '000', 
+            'phone' => '000',
             'user_type' => 'admin', 
+            'email' => 'francisfernandez163@gmail.com',  
             'is_active' => 'Y', 
-            'password' => Hash::make('dataiq2021'),
+            'password' => Hash::make('admin'),
             'last_edit_user_id' => '1'
             ],
         );

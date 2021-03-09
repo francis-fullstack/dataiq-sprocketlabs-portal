@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\sprocket_labs\SprocketLabsUser;
+use App\Http\Controllers\sprocket_labs\ServiceProviderUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,18 @@ Route::group([
 
 ], function () {
 
+    
+    
+
     #User Management for SPROCKET LABS USER
-    Route::get('getallslusers', [SprocketLabsUser::class, 'getAllSprocketLabsUsers']);
-    Route::get('getsluser/{email}', [SprocketLabsUser::class, 'getInfoByEmail']);
-    Route::post('addsluser', [SprocketLabsUser::class, 'create']);
-    Route::post('updatesluser', [SprocketLabsUser::class, 'edit']);
+    Route::get('sprocketlabs/getallslusers', [SprocketLabsUser::class, 'getallsprocketlabusers']);
+    Route::get('sprocketlabs/getsluser/{email}', [SprocketLabsUser::class, 'getinfobyemail']);
+    Route::post('sprocketlabs/addsluser', [SprocketLabsUser::class, 'create']);
+    Route::post('sprocketlabs/updatesluser', [SprocketLabsUser::class, 'edit']);
+
+    #User Management for SERVICE PROVIDER USER UNDER SPROCKET LABS ADMIN USER
+    Route::get('sprocketlabs/getallspusers', [ServiceProviderUserController::class, 'getallspuser']);
+    Route::get('sprocketlabs/getspuser/{email}', [ServiceProviderUserController::class, 'getinfobyemail']);
+    Route::post('sprocketlabs/addspuser', [ServiceProviderUserController::class, 'create']);
+    Route::post('sprocketlabs/updatespuser', [ServiceProviderUserController::class, 'edit']);
 });
